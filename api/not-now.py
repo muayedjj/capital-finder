@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler
 from urllib import parse
 import requests
+import json
 
 
 class handler(BaseHTTPRequestHandler):
@@ -9,20 +10,36 @@ class handler(BaseHTTPRequestHandler):
         url_components = parse.urlsplit(s)
         query_string_list = parse.parse_qsl(url_components.query)
         dic = dict(query_string_list)
-        definitions = []
-        if 'word' in dic:
-            word = dic['word']
-            url = 'https://restcountries.com/v3.1/capital/'
+
+        if 'capital' in dic:
+
+            word = dic['capital']
+            url = 'https://restcountries.com/v3.1/'
+
+            res = requests.get(url + "capital/" + word)
+            data = res.json()
+            capitals = data[0]["capital"][0]
+            country_name = data[0]["name"]["common"]
+
+            message = f"The capital of {country_name} is {capitals[0]}"
+
+            # r = requests.get(url + word)
+            # data = r.json()
+            # cap = data["name"]["common"]
+            # cou = data['capital'][0]
+            # message = '{} is the capital city of {}'.format(cap, cou)
+
+        elif 'country' in dic:
+            word = dic['country']
+            url = 'https://restcountries.com/v3.1/name/'
             r = requests.get(url + word)
             data = r.json()
-            for word_data in data:
-                definition = word_data['meanings'][0]['definitions'][0]['definition']
-                definitions.append(definition)
-
-            message = str(definitions)
+            cap = data["name"]["common"]
+            cou = data['capital'][0]
+            message = '{} is the capital city of {}'.format(cap, cou)
 
         else:
-            message = "Please provide me with a word"
+            message = "Please provide a country or a capital"
 
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
@@ -30,3 +47,13 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(message.encode())
 
         return
+
+
+response = requests.get('https://restcountries.com/v3.1/capital/amman')
+print(f'Response status code: {response.status_code}')
+print(f'Response header: {response.headers}')
+print(f'Response body : {json.dumps(response.json(), indent=4)}')
+"""
+body[0]["name"]["common"]
+body[0]["capital"][0]
+"""
