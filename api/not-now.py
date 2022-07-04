@@ -12,13 +12,22 @@ class handler(BaseHTTPRequestHandler):
         dic = dict(query_string_list)
 
         if 'capital' in dic:
+
             word = dic['capital']
-            url = 'https://restcountries.com/v3.1/capital/'
-            r = requests.get(url + word)
-            data = r.json()
-            cap = data["name"]["common"]
-            cou = data['capital'][0]
-            message = '{} is the capital city of {}'.format(cap, cou)
+            url = 'https://restcountries.com/v3.1/'
+
+            res = requests.get(url + "capital/" + word)
+            data = res.json()
+            capitals = data[0]["capital"][0]
+            country_name = data[0]["name"]["common"]
+
+            message = f"The capital of {country_name} is {capitals[0]}"
+
+            # r = requests.get(url + word)
+            # data = r.json()
+            # cap = data["name"]["common"]
+            # cou = data['capital'][0]
+            # message = '{} is the capital city of {}'.format(cap, cou)
 
         elif 'country' in dic:
             word = dic['country']
@@ -39,12 +48,12 @@ class handler(BaseHTTPRequestHandler):
 
         return
 
-"""
+
 response = requests.get('https://restcountries.com/v3.1/capital/amman')
 print(f'Response status code: {response.status_code}')
 print(f'Response header: {response.headers}')
 print(f'Response body : {json.dumps(response.json(), indent=4)}')
-
+"""
 body[0]["name"]["common"]
 body[0]["capital"][0]
 """
