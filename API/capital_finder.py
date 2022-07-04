@@ -16,8 +16,8 @@ class Handler(BaseHTTPRequestHandler):
             req = requests.get(url)
             data = req.json()
             for capital_data in data:
-                definition = capital_data['meanings'][0]['cap'][0]['definition']
-                cap.append(definition)
+                definition = str(capital_data['meanings'][0]['cap'][0]['definition'])
+                cap += definition
 
             message = str(cap)
 
