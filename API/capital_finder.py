@@ -9,17 +9,17 @@ class Handler(BaseHTTPRequestHandler):
         url_components = parse.urlsplit(path)
         query_string_list = parse.parse_qsl(url_components.query)
         dic = dict(query_string_list)
-        definitions = []
+        cap = ''
         if 'capital' in dic:
             capital = dic['capital']
             url = f'https://restcountries.com/v3.1/capital/{capital}'
             req = requests.get(url)
             data = req.json()
             for capital_data in data:
-                definition = capital_data['meanings'][0]['definitions'][0]['definition']
-                definitions.append(definition)
+                definition = capital_data['meanings'][0]['cap'][0]['definition']
+                cap.append(definition)
 
-            message = str(definitions)
+            message = str(cap)
 
         else:
             message = "Please provide me with a word"
