@@ -18,7 +18,7 @@ class handler(BaseHTTPRequestHandler):
             res = requests.get(url + capital)
 
             data = res.json()
-            cap = data[0]["capital"][0]
+            cap = data[0]["capital"]
             country = data[0]["name"]
 
             message = f"The capital of {country} is {cap}"
