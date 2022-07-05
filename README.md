@@ -1,6 +1,8 @@
 # capital-finder
 
 ## Capitals
-https://capital-finder-muayad-r06dlq5xs-muayedjj.vercel.app/api/capital_finder?country=Jordan
+[Amman](https://capital-finder-muayad-1dgvsmy4m-muayedjj.vercel.app/api/capital_finder?country=Jordan)
+
 ## Countries
-https://capital-finder-muayad-r06dlq5xs-muayedjj.vercel.app/api/capital_finder?capital=Amman
+[Jordan](https://capital-finder-muayad-1dgvsmy4m-muayedjj.vercel.app/api/capital_finder?capital=Amman)
+
