@@ -21,6 +21,7 @@ class handler(BaseHTTPRequestHandler):
             cap = data[0]["capital"]
             country = data[0]["name"]
 
+            message = '{} is the capital city of {}'.format(cap, cou)
             message = f"The capital of {country} is {cap}"
 
             # r = requests.get(url + word)
@@ -37,7 +38,7 @@ class handler(BaseHTTPRequestHandler):
             data = res.json()[0]
             cou = data["name"]["common"]
             cap = data['capital'][0]
-            message = '{} is the capital city of {}'.format(cap, cou)
+            message = f"The capital of {country} is {cap}"
 
         else:
             message = "Please provide a country or a capital"
