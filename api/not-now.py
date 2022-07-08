@@ -6,22 +6,22 @@ import json
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        s = self.path
-        url_components = parse.urlsplit(s)
+        path = self.path
+        url_components = parse.urlsplit(path)
         query_string_list = parse.parse_qsl(url_components.query)
         dic = dict(query_string_list)
 
         if 'capital' in dic:
 
-            word = dic['capital']
-            url = 'https://restcountries.com/v3.1/'
+            capital = dic['capital']
+            url = 'https://restcountries.com/v2/capital/'
+            res = requests.get(url + capital)
 
-            res = requests.get(url + "capital/" + word)
             data = res.json()
-            capitals = data[0]["capital"][0]
-            country_name = data[0]["name"]["common"]
+            cap = data[0]["capital"]
+            country = data[0]["name"]
 
-            message = f"The capital of {country_name} is {capitals[0]}"
+            message = f"The capital of {country} is {cap}"
 
             # r = requests.get(url + word)
             # data = r.json()
@@ -30,12 +30,13 @@ class handler(BaseHTTPRequestHandler):
             # message = '{} is the capital city of {}'.format(cap, cou)
 
         elif 'country' in dic:
-            word = dic['country']
+            country = dic['country']
             url = 'https://restcountries.com/v3.1/name/'
-            r = requests.get(url + word)
-            data = r.json()
-            cap = data["name"]["common"]
-            cou = data['capital'][0]
+            res = requests.get(url + country)
+
+            data = res.json()[0]
+            cou = data["name"]["common"]
+            cap = data['capital'][0]
             message = '{} is the capital city of {}'.format(cap, cou)
 
         else:
